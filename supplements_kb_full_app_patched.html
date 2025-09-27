@@ -1,0 +1,1500 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Supplements Companion — Full KB</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body{font-family:Inter,system-ui;background:linear-gradient(180deg,#e6f0ff,#eef7ff);color:#0f172a;padding:12px}
+  .container{max-width:1100px;margin:0 auto}
+  .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+  .title{font-weight:800;font-size:20px}
+  .search-row{display:grid;grid-template-columns:1fr 220px;gap:8px;margin-bottom:12px}
+  input,select{padding:10px;border-radius:10px;border:1px solid #cfe1ff}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+  .card{background:white;border-radius:12px;padding:10px;box-shadow:0 6px 20px rgba(2,6,23,0.06);display:flex;flex-direction:column;min-height:140px}
+  .meta{font-size:12px;color:#475569;margin-bottom:6px;display:flex;justify-content:space-between}
+  .name{font-weight:700;font-size:15px;margin-bottom:6px}
+  .notes{font-size:13px;color:#475569;margin-bottom:8px;max-height:3.6em;overflow:hidden}
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+  .chip{font-size:11px;padding:4px 8px;border-radius:999px;background:#f1f5f9;color:#0f172a}
+  .take{background:#ecfeff;color:#0369a1}
+  .uses{background:#eef2ff;color:#6d28d9}
+  .card-footer{display:flex;gap:8px;margin-top:auto}
+  .btn{padding:7px 10px;border-radius:8px;font-size:13px;cursor:pointer;border:1px solid rgba(15,23,42,0.06);background:white}
+  .btn-primary{background:linear-gradient(90deg,#0ea5a8,#2563eb);color:white;border:none}
+  .drawer-panel{position:fixed;right:0;top:0;height:100%;width:100%;max-width:520px;background:white;padding:18px;overflow:auto;transform:translateX(110%);transition:transform .28s ease;box-shadow:-30px 0 60px rgba(2,6,23,0.08);z-index:60}
+  .drawer-backdrop{position:fixed;inset:0;background:rgba(2,6,23,0.36);display:none;z-index:50}
+  .drawer-open .drawer-backdrop{display:block}
+  .drawer-open .drawer-panel{transform:translateX(0%)}
+  .muted{color:#64748b;font-size:13px}
+  a.ref-link{color:#0ea5a8;text-decoration:underline;font-size:13px}
+  .badge{display:inline-block;padding:2px 6px;border-radius:6px;font-size:11px;font-weight:600;margin-left:8px}
+  .badge-nih{background:#e0f2fe;color:#0369a1}
+  .badge-ncbi{background:#dcfce7;color:#166534}
+  @media (max-width:640px){.search-row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+  <div class="container" id="app">
+    <div class="header">
+      <div>
+        <div class="title">Supplements Companion</div>
+        <div class="muted">Search matches name, id, notes, uses, take_with, avoid_with, interactions. Reference badges show one trusted link per item.</div>
+      </div>
+      <div><button id="export" class="btn btn-primary">Export JSON</button></div>
+    </div>
+
+    <div class="search-row">
+      <input id="searchInput" placeholder="Search supplements, e.g. 'vitamin d3', 'iron', 'curcumin'..." />
+      <select id="category"><option value="All">All categories</option></select>
+    </div>
+
+    <div id="counts" class="muted" style="margin-bottom:8px"></div>
+    <div id="grid" class="grid" role="list"></div>
+
+    <div id="drawerWrapper" aria-hidden="true">
+      <div class="drawer-backdrop" id="drawerBackdrop"></div>
+      <div class="drawer-panel" id="drawerPanel">
+        <button id="closeDrawer" class="btn" style="margin-bottom:12px;">Close</button>
+        <div id="drawerContent"></div>
+      </div>
+    </div>
+
+    <div style="margin-top:12px;font-size:12px;color:#64748b">Source KB: <code>supplements_kb_full.json</code>. If you'd like edits (colors, compactness, badges), tell me which tweaks.</div></div>
+
+<script id="kb" type="application/json">
+[
+  {
+    "id": "vitA",
+    "name": "Vitamin A (retinol / beta-carotene)",
+    "category": "Vitamin",
+    "forms": [
+      "Retinol",
+      "Beta-carotene"
+    ],
+    "typical_dosage": "700-900 µg RAE (dietary), supplement doses vary",
+    "best_time": "With a fat-containing meal",
+    "take_with": [
+      "Fatty foods"
+    ],
+    "avoid_with": [
+      "High-dose vitamin A with retinoids"
+    ],
+    "interactions": [
+      "Careful with retinoid medications; teratogenic at high doses in pregnancy"
+    ],
+    "notes": "Fat-soluble; important for vision and immune function.",
+    "references": [
+      "https://ods.od.nih.gov/factsheets/VitaminA-Consumer/",
+      "https://www.who.int/health-topics/vitamin-a"
+    ]
+  },
+  {
+    "id": "vitB1",
+    "name": "Vitamin B1 (Thiamine)",
+    "category": "Vitamin",
+    "forms": [
+      "Thiamine mononitrate",
+      "Thiamine hydrochloride"
+    ],
+    "typical_dosage": "1.1-1.2 mg/day (dietary), therapeutic dosing higher",
+    "best_time": "With meals or anytime",
+    "take_with": [],
+    "avoid_with": [],
+    "interactions": [
+      "May be given IV in deficiency"
+    ],
+    "notes": "Water-soluble; supports carbohydrate metabolism.",
+    "references": [
+      "https://ods.od.nih.gov/factsheets/VitaminB1-Consumer/"
+    ]
+  },
+  {
+    "id": "vitB2",
+    "name": "Vitamin B2 (Riboflavin)",
+    "category": "Vitamin",
+    "forms": [
+      "Riboflavin"
+    ],
+    "typical_dosage": "1.1-1.3 mg/day",
+    "best_time": "With meals",
+    "take_with": [],
+    "avoid_with": [],
+    "interactions": [],
+    "notes": "Supports energy metabolism and redox reactions.",
+    "references": [
+      "https://ods.od.nih.gov/factsheets/Riboflavin-Consumer/"
+    ]
+  },
+  {
+    "id": "vitB3",
+    "name": "Vitamin B3 (Niacin)",
+    "category": "Vitamin",
+    "forms": [
+      "Nicotinic acid",
+      "Niacinamide"
+    ],
+    "typical_dosage": "14-16 mg/day (dietary); higher pharmacologic doses for lipid effects",
+    "best_time": "With food",
+    "take_with": [],
+    "avoid_with": [
+      "High-dose niacin may interact with statins"
+    ],
+    "interactions": [
+      "May cause flushing at high doses; monitor liver with high-dose therapy"
+    ],
+    "notes": "Used in lipid management at prescription doses.",
+    "references": [
+      "https://www.ncbi.nlm.nih.gov/books/NBK558941/"
+    ]
+  },
+  {
+    "id": "vitB5",
+    "name": "Vitamin B5 (Pantothenic acid)",
+    "category": "Vitamin",
+    "forms": [
+      "Pantothenic acid"
+    ],
+    "typical_dosage": "5 mg/day",
+    "best_time": "With meals",
+    "take_with": [],
+    "avoid_with": [],
+    "interactions": [],
+    "notes": "Component of coenzyme A.",
+    "references": [
+      "https://ods.od.nih.gov/factsheets/PantothenicAcid-Consumer/"
+    ]
+  },
+  {
+    "id": "vitB6",
+    "name": "Vitamin B6 (Pyridoxine)",
+    "category": "Vitamin",
+    "forms": [
+      "Pyridoxine",
+      "Pyridoxal-5-phosphate"
+    ],
+    "typical_dosage": "1.3-1.7 mg/day; avoid prolonged high doses (>100 mg/day)",
+    "best_time": "With food",
+    "take_with": [],
+    "avoid_with": [
+      "High long-term doses can cause neuropathy"
+    ],
+    "interactions": [],
+    "notes": "Involved in neurotransmitter synthesis.",
+    "references": [
+      "https://ods.od.nih.gov/factsheets/VitaminB6-Consumer/"
+    ]
+  },
+  {
+    "id": "vitB7",
+    "name": "Vitamin B7 (Biotin)",
+    "category": "Vitamin",
+    "forms": [
+      "Biotin"
+    ],
+    "typical_dosage": "30 µg/day",
+    "best_time": "With meals",
+    "take_with": [],
+    "avoid_with": [],
+    "interactions": [
+      "High-dose biotin interferes with some lab tests"
+    ],
+    "notes": "Important cofactor for carboxylase enzymes.",
+    "references": [
+      "https://ods.od.nih.gov/factsheets/VitaminB7-Consumer/"
+    ]
+  },
+  {
+    "id": "vitB9",
+    "name": "Vitamin B9 (Folate / Folic acid)",
+    "category": "Vitamin",
+    "forms": [
+      "Folate",
+      "Folic acid",
+      "5-MTHF"
+    ],
+    "typical_dosage": "400 µg/day (pregnancy higher)",
+    "best_time": "With meals",
+    "take_with": [
+      "B12 works with folate"
+    ],
+    "avoid_with": [],
+    "interactions": [
+      "Masking B12 deficiency if high folic acid"
+    ],
+    "notes": "Important in pregnancy and RBC formation.",
+    "references": [
+      "https://ods.od.nih.gov/factsheets/Folate-Consumer/"
+    ]
+  },
+  {
+    "id": "vitB12",
+    "name": "Vitamin B12 (Cobalamin)",
+    "category": "Vitamin",
+    "forms": [
+      "Methylcobalamin",
+      "Cyanocobalamin",
+      "Hydroxocobalamin"
+    ],
+    "typical_dosage": "2.4 µg/day (dietary); higher oral/sublingual/injection doses used clinically",
+    "best_time": "Anytime; with food if tolerated",
+    "take_with": [],
+    "avoid_with": [
+      "PPIs and metformin can reduce absorption"
+    ],
+    "interactions": [
+      "May require injections in severe deficiency"
+    ],
+    "notes": "Requires intrinsic factor in stomach for absorption (dietary).",
+    "references": [
+      "https://ods.od.nih.gov/factsheets/VitaminB12-Consumer/"
+    ]
+  },
+  {
+    "id": "vitC",
+    "name": "Vitamin C (Ascorbic acid)",
+    "category": "Vitamin",
+    "forms": [
+      "Ascorbic acid",
+      "Buffered forms"
+    ],
+    "typical_dosage": "75-90 mg/day (dietary); 500-1000 mg common supplement",
+    "best_time": "With or without food",
+    "take_with": [
+      "Enhances non-heme iron absorption"
+    ],
+    "avoid_with": [],
+    "interactions": [
+      "High doses may cause GI upset; kidney stones risk in susceptible"
+    ],
+    "notes": "Antioxidant and cofactor.",
+    "references": [
+      "https://ods.od.nih.gov/factsheets/VitaminC-Consumer/"
+    ]
+  },
+  {
+    "id": "vitD2",
+    "name": "Vitamin D2 (Ergocalciferol)",
+    "category": "Vitamin",
+    "forms": [
+      "D2"
+    ],
+    "typical_dosage": "600-800 IU/day (dietary); supplements vary",
+    "best_time": "With a fat-containing meal",
+    "take_with": [
+      "Fatty meals"
+    ],
+    "avoid_with": [],
+    "interactions": "Plant-derived form of vitamin D.",
+    "notes": [
+      "https://ods.od.nih.gov/factsheets/VitaminD-Consumer/"
+    ],
+    "references": []
+  },
+  {
+    "id": "vitD3",
+    "name": "Vitamin D3 (Cholecalciferol)",
+    "category": "Vitamin",
+    "forms": [
+      "D3"
+    ],
+    "typical_dosage": "600-2000 IU/day common; higher with deficiency as prescribed",
+    "best_time": "With a fat-containing meal",
+    "take_with": [
+      "Fatty meals",
+      "Magnesium aids activation"
+    ],
+    "avoid_with": [],
+    "interactions": "More effective than D2 at raising 25(OH)D.",
+    "notes": [
+      "https://ods.od.nih.gov/factsheets/VitaminD-Consumer/"
+    ],
+    "references": []
+  },
+  {
+    "id": "vitE",
+    "name": "Vitamin E (Tocopherols / Tocotrienols)",
+    "category": "Vitamin",
+    "forms": [
+      "Alpha-tocopherol",
+      "Mixed tocopherols"
+    ],
+    "typical_dosage": "15 mg/day (dietary); supplements vary",
+    "best_time": "With fatty meal",
+    "take_with": [
+      "Fatty foods"
+    ],
+    "avoid_with": [
+      "High doses with anticoagulants caution"
+    ],
+    "interactions": [
+      "May affect anticoagulant therapy"
+    ],
+    "notes": "Fat-soluble antioxidant.",
+    "references": [
+      "https://ods.od.nih.gov/factsheets/VitaminE-Consumer/"
+    ]
+  },
+  {
+    "id": "vitK1",
+    "name": "Vitamin K1 (Phylloquinone)",
+    "category": "Vitamin",
+    "forms": [
+      "K1"
+    ],
+    "typical_dosage": "90-120 µg/day",
+    "best_time": "With fatty meal",
+    "take_with": [
+      "Fatty meals"
+    ],
+    "avoid_with": [
+      "Warfarin (antagonizes effect)"
+    ],
+    "interactions": [
+      "Can antagonize warfarin effect; monitor INR"
+    ],
+    "notes": "Important for clotting.",
+    "references": [
+      "https://ods.od.nih.gov/factsheets/VitaminK-Consumer/"
+    ]
+  },
+  {
+    "id": "vitK2",
+    "name": "Vitamin K2 (Menaquinone)",
+    "category": "Vitamin",
+    "forms": [
+      "MK-4",
+      "MK-7"
+    ],
+    "typical_dosage": "Supplements vary",
+    "best_time": "With fatty meal",
+    "take_with": [
+      "Fatty meals",
+      "Vitamin D3 synergy"
+    ],
+    "avoid_with": [
+      "Warfarin — check with doctor"
+    ],
+    "interactions": [
+      "Synergistic with vitamin D for bone health"
+    ],
+    "notes": "Supports bone mineralization.",
+    "references": [
+      "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5537803/"
+    ]
+  },
+  {
+    "id": "calcium",
+    "name": "Calcium (carbonate / citrate)",
+    "category": "Mineral",
+    "forms": [
+      "Calcium carbonate",
+      "Calcium citrate"
+    ],
+    "typical_dosage": "1000-1200 mg/day dietary; supplements often 500 mg per dose",
+    "best_time": "With meals (split doses)",
+    "take_with": [
+      "With meals"
+    ],
+    "avoid_with": [
+      "Iron (separate)"
+    ],
+    "interactions": [
+      "Can interfere with iron absorption; kidney disease caution"
+    ],
+    "notes": "Use smaller divided doses for best absorption.",
+    "references": [
+      "https://ods.od.nih.gov/factsheets/Calcium-Consumer/"
+    ]
+  },
+  {
+    "id": "iron",
+    "name": "Iron (ferrous sulfate / fumarate)",
+    "category": "Mineral",
+    "forms": [
+      "Ferrous sulfate",
+      "Ferrous fumarate",
+      "Heme iron polypeptide"
+    ],
+    "typical_dosage": "8-18 mg/day dietary; therapeutic 60-200 mg elemental iron",
+    "best_time": "Empty stomach for absorption if tolerated; with vitamin C",
+    "take_with": [
+      "Vitamin C"
+    ],
+    "avoid_with": [
+      "Calcium, tea/coffee, antacids"
+    ],
+    "interactions": [
+      "Many drug interactions; GI side effects common"
+    ],
+    "notes": "Essential for hemoglobin; separate from calcium.",
+    "references": [
+      "https://ods.od.nih.gov/factsheets/Iron-Consumer/"
+    ]
+  },
+  {
+    "id": "magnesium",
+    "name": "Magnesium (oxide / citrate / glycinate)",
+    "category": "Mineral",
+    "forms": [
+      "Magnesium oxide",
+      "Magnesium citrate",
+      "Magnesium glycinate"
+    ],
+    "typical_dosage": "310-420 mg/day dietary; supplements vary",
+    "best_time": "With food",
+    "take_with": [
+      "Vitamin D3"
+    ],
+    "avoid_with": [
+      "High-dose calcium at same time"
+    ],
+    "interactions": [
+      "Laxative effect at high doses"
+    ],
+    "notes": "Cofactor in many enzymatic reactions.",
+    "references": [
+      "https://ods.od.nih.gov/factsheets/Magnesium-Consumer/"
+    ]
+  },
+  {
+    "id": "zinc",
+    "name": "Zinc (gluconate / oxide / picolinate)",
+    "category": "Mineral",
+    "forms": [
+      "Zinc gluconate",
+      "Zinc picolinate"
+    ],
+    "typical_dosage": "8-11 mg/day dietary; supplements 15-30 mg common",
+    "best_time": "Empty stomach or with food if GI upset",
+    "take_with": [],
+    "avoid_with": [
+      "High-dose iron (compete), high zinc affects copper"
+    ],
+    "interactions": [
+      "Can reduce copper absorption with high doses"
+    ],
+    "notes": "Supports immune function.",
+    "references": [
+      "https://ods.od.nih.gov/factsheets/Zinc-Consumer/"
+    ]
+  },
+  {
+    "id": "copper",
+    "name": "Copper",
+    "category": "Mineral",
+    "forms": [
+      "Copper sulfate",
+      "Copper gluconate"
+    ],
+    "typical_dosage": "0.9 mg/day",
+    "best_time": "With food",
+    "take_with": [],
+    "avoid_with": [
+      "High zinc doses"
+    ],
+    "interactions": [
+      "Interaction with zinc"
+    ],
+    "notes": "Trace mineral important for enzymes.",
+    "references": [
+      "https://ods.od.nih.gov/factsheets/Copper-Consumer/"
+    ]
+  },
+  {
+    "id": "selenium",
+    "name": "Selenium",
+    "category": "Mineral",
+    "forms": [
+      "Selenomethionine",
+      "Sodium selenite"
+    ],
+    "typical_dosage": "55 µg/day",
+    "best_time": "With food",
+    "take_with": [],
+    "avoid_with": [],
+    "interactions": [
+      "Narrow therapeutic window; excess toxic"
+    ],
+    "notes": "Antioxidant trace element.",
+    "references": [
+      "https://ods.od.nih.gov/factsheets/Selenium-Consumer/"
+    ]
+  },
+  {
+    "id": "manganese",
+    "name": "Manganese",
+    "category": "Mineral",
+    "forms": [],
+    "typical_dosage": "1.8-2.3 mg/day",
+    "best_time": "With food",
+    "take_with": [],
+    "avoid_with": [],
+    "interactions": [
+      "Excess can be neurotoxic"
+    ],
+    "notes": "Trace mineral; avoid excessive supplementation.",
+    "references": [
+      "https://ods.od.nih.gov/factsheets/Manganese-Consumer/"
+    ]
+  },
+  {
+    "id": "chromium",
+    "name": "Chromium",
+    "category": "Mineral",
+    "forms": [
+      "Chromium picolinate"
+    ],
+    "typical_dosage": "25-35 µg/day",
+    "best_time": "With meals",
+    "take_with": [],
+    "avoid_with": [],
+    "interactions": [
+      "May affect blood sugar medications"
+    ],
+    "notes": "Trace mineral related to glucose metabolism.",
+    "references": [
+      "https://ods.od.nih.gov/factsheets/Chromium-Consumer/"
+    ]
+  },
+  {
+    "id": "iodine",
+    "name": "Iodine",
+    "category": "Mineral",
+    "forms": [
+      "Potassium iodide"
+    ],
+    "typical_dosage": "150 µg/day",
+    "best_time": "With food",
+    "take_with": [],
+    "avoid_with": [
+      "Excess iodine with thyroid disease caution"
+    ],
+    "interactions": [
+      "Thyroid medications interactions"
+    ],
+    "notes": "Necessary for thyroid hormones.",
+    "references": [
+      "https://ods.od.nih.gov/factsheets/Iodine-Consumer/"
+    ]
+  },
+  {
+    "id": "potassium",
+    "name": "Potassium",
+    "category": "Mineral",
+    "forms": [
+      "Potassium chloride"
+    ],
+    "typical_dosage": "Dietary needs ~3500-4700 mg/day; supplements only when indicated",
+    "best_time": "With food",
+    "take_with": [],
+    "avoid_with": [
+      "Kidney disease / ACE inhibitor caution"
+    ],
+    "interactions": [
+      "Can cause hyperkalemia in susceptible individuals"
+    ],
+    "notes": "Electrolyte; supplement only if deficient or prescribed.",
+    "references": [
+      "https://www.ncbi.nlm.nih.gov/books/NBK47555/"
+    ]
+  },
+  {
+    "id": "phosphorus",
+    "name": "Phosphorus",
+    "category": "Mineral",
+    "forms": [],
+    "typical_dosage": "700 mg/day",
+    "best_time": "With meals",
+    "take_with": [],
+    "avoid_with": [],
+    "interactions": [
+      "High intake affects kidney patients"
+    ],
+    "notes": "Works with calcium in bone.",
+    "references": [
+      "https://ods.od.nih.gov/factsheets/Phosphorus-Consumer/"
+    ]
+  },
+  {
+    "id": "boron",
+    "name": "Boron",
+    "category": "Trace mineral",
+    "forms": [],
+    "typical_dosage": "No established RDI; supplements often 1-3 mg",
+    "best_time": "With food",
+    "take_with": [],
+    "avoid_with": [],
+    "interactions": [],
+    "notes": "May support bone and hormone metabolism.",
+    "references": [
+      "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3265666/"
+    ]
+  },
+  {
+    "id": "molybdenum",
+    "name": "Molybdenum",
+    "category": "Trace mineral",
+    "forms": [],
+    "typical_dosage": "45 µg/day",
+    "best_time": "With food",
+    "take_with": [],
+    "avoid_with": [],
+    "interactions": [],
+    "notes": "Cofactor for molybdoenzymes.",
+    "references": [
+      "https://ods.od.nih.gov/factsheets/Molybdenum-Consumer/"
+    ]
+  },
+  {
+    "id": "omega3",
+    "name": "Omega-3 (EPA / DHA fish oil)",
+    "category": "Fatty acid",
+    "forms": [
+      "Fish oil",
+      "Triglyceride/ethyl ester forms"
+    ],
+    "typical_dosage": "250-1000 mg EPA+DHA typical; higher for cardiac/triglyceride therapy",
+    "best_time": "With meal",
+    "take_with": [
+      "Fatty meal"
+    ],
+    "avoid_with": [
+      "High-dose anticoagulants caution"
+    ],
+    "interactions": [
+      "May interact with anticoagulant medications"
+    ],
+    "notes": "Supports heart and brain health.",
+    "references": [
+      "https://ods.od.nih.gov/factsheets/Omega3FattyAcids-Consumer/"
+    ]
+  },
+  {
+    "id": "coq10",
+    "name": "Coenzyme Q10 (CoQ10)",
+    "category": "Nutraceutical",
+    "forms": [
+      "Ubiquinone",
+      "Ubiquinol"
+    ],
+    "typical_dosage": "100-300 mg/day common",
+    "best_time": "With fatty meal",
+    "take_with": [
+      "Fatty foods"
+    ],
+    "avoid_with": [
+      "May interact with warfarin"
+    ],
+    "interactions": [
+      "May reduce statin side effects (used adjunctively)"
+    ],
+    "notes": "Supports mitochondrial energy.",
+    "references": [
+      "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3370497/"
+    ]
+  },
+  {
+    "id": "creatine",
+    "name": "Creatine monohydrate",
+    "category": "Nutraceutical",
+    "forms": [
+      "Monohydrate"
+    ],
+    "typical_dosage": "3-5 g/day maintenance",
+    "best_time": "With carbohydrate or post-workout",
+    "take_with": [
+      "Carbohydrate"
+    ],
+    "avoid_with": [
+      "Kidney disease caution"
+    ],
+    "interactions": [
+      "Well-studied for performance"
+    ],
+    "notes": "Popular performance supplement.",
+    "references": [
+      "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5922747/"
+    ]
+  },
+  {
+    "id": "collagen",
+    "name": "Collagen (hydrolyzed)",
+    "category": "Nutraceutical",
+    "forms": [
+      "Hydrolyzed collagen peptides"
+    ],
+    "typical_dosage": "2.5-15 g/day used in studies",
+    "best_time": "With or without food",
+    "take_with": [],
+    "avoid_with": [],
+    "interactions": [
+      "May support skin/joint health"
+    ],
+    "notes": [
+      "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7998684/"
+    ],
+    "references": []
+  },
+  {
+    "id": "glucosamine",
+    "name": "Glucosamine",
+    "category": "Nutraceutical",
+    "forms": [
+      "Glucosamine sulfate",
+      "Glucosamine HCl"
+    ],
+    "typical_dosage": "1500 mg/day common",
+    "best_time": "With food",
+    "take_with": [],
+    "avoid_with": [
+      "Shellfish allergy caution if derived"
+    ],
+    "interactions": [
+      "Used for joint support"
+    ],
+    "notes": [
+      "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4211758/"
+    ],
+    "references": []
+  },
+  {
+    "id": "melatonin",
+    "name": "Melatonin",
+    "category": "Hormone / Supplement",
+    "forms": [],
+    "typical_dosage": "0.5-5 mg at bedtime",
+    "best_time": "At bedtime",
+    "take_with": [],
+    "avoid_with": [
+      "Sedatives — additive effects"
+    ],
+    "interactions": [
+      "Used for short-term sleep regulation"
+    ],
+    "notes": [
+      "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6492059/"
+    ],
+    "references": []
+  },
+  {
+    "id": "turmeric",
+    "name": "Turmeric / Curcumin",
+    "category": "Herbal",
+    "forms": [
+      "Curcumin extracts (with piperine)"
+    ],
+    "typical_dosage": "500-2000 mg curcuminoids/day (with piperine)",
+    "best_time": "With fatty meal",
+    "take_with": [
+      "Black pepper (piperine)",
+      "Fat"
+    ],
+    "avoid_with": [
+      "Anticoagulants caution"
+    ],
+    "interactions": [
+      "Poor bioavailability without enhancers"
+    ],
+    "notes": "Anti-inflammatory compound.",
+    "references": [
+      "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5664031/"
+    ]
+  },
+  {
+    "id": "probiotic",
+    "name": "Probiotic (various strains)",
+    "category": "Probiotic",
+    "forms": [
+      "Lactobacillus",
+      "Bifidobacterium",
+      "Saccharomyces boulardii"
+    ],
+    "typical_dosage": "CFU vary widely (1 billion to 50+ billion)",
+    "best_time": "Per strain guidance; often with food",
+    "take_with": [
+      "Food"
+    ],
+    "avoid_with": [
+      "Hot drinks"
+    ],
+    "interactions": [
+      "Strain-specific effects; immunocompromised caution"
+    ],
+    "notes": "Strain and product dependent benefits.",
+    "references": [
+      "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5641835/"
+    ]
+  },
+  {
+    "id": "l_theanine",
+    "name": "L-Theanine",
+    "category": "Amino acid / Nutraceutical",
+    "forms": [],
+    "typical_dosage": "100-200 mg",
+    "best_time": "With or without food; often daytime",
+    "take_with": [],
+    "avoid_with": [],
+    "interactions": [
+      "May promote relaxation without sedation"
+    ],
+    "notes": [
+      "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6413071/"
+    ],
+    "references": []
+  },
+  {
+    "id": "ashwagandha",
+    "name": "Ashwagandha (Withania somnifera)",
+    "category": "Herbal",
+    "forms": [],
+    "typical_dosage": "300-600 mg standardized extract",
+    "best_time": "With meals",
+    "take_with": [],
+    "avoid_with": [
+      "Thyroid and sedative interactions caution"
+    ],
+    "interactions": [
+      "Adaptogen used for stress/anxiety"
+    ],
+    "notes": [
+      "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6979305/"
+    ],
+    "references": []
+  },
+  {
+    "id": "ginseng",
+    "name": "Ginseng (Panax ginseng)",
+    "category": "Herbal",
+    "forms": [],
+    "typical_dosage": "200-400 mg extract",
+    "best_time": "With meals",
+    "take_with": [],
+    "avoid_with": [
+      "Anticoagulants caution"
+    ],
+    "interactions": [
+      "May affect blood pressure and blood sugar"
+    ],
+    "notes": [
+      "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3659614/"
+    ],
+    "references": []
+  },
+  {
+    "id": "ginkgo",
+    "name": "Ginkgo biloba",
+    "category": "Herbal",
+    "forms": [],
+    "typical_dosage": "120-240 mg/day extract",
+    "best_time": "With food",
+    "take_with": [],
+    "avoid_with": [
+      "Anticoagulants caution"
+    ],
+    "interactions": [
+      "May increase bleeding risk with anticoagulants"
+    ],
+    "notes": [
+      "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6399718/"
+    ],
+    "references": []
+  },
+  {
+    "id": "milk_thistle",
+    "name": "Milk thistle (Silymarin)",
+    "category": "Herbal",
+    "forms": [],
+    "typical_dosage": "140-700 mg/day silymarin",
+    "best_time": "With food",
+    "take_with": [],
+    "avoid_with": [],
+    "interactions": [
+      "Used for liver support; evidence mixed"
+    ],
+    "notes": [
+      "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5551441/"
+    ],
+    "references": []
+  },
+  {
+    "id": "green_tea_extract",
+    "name": "Green tea extract (EGCG)",
+    "category": "Herbal",
+    "forms": [],
+    "typical_dosage": "250-500 mg polyphenols",
+    "best_time": "With food",
+    "take_with": [],
+    "avoid_with": [
+      "High doses may affect liver in rare cases"
+    ],
+    "interactions": [
+      "Contains caffeine in some products"
+    ],
+    "notes": [
+      "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6520897/"
+    ],
+    "references": []
+  },
+  {
+    "id": "resveratrol",
+    "name": "Resveratrol",
+    "category": "Nutraceutical",
+    "forms": [],
+    "typical_dosage": "100-500 mg/day used in studies",
+    "best_time": "With food",
+    "take_with": [],
+    "avoid_with": [],
+    "interactions": [
+      "Polyphenol studied for aging markers"
+    ],
+    "notes": [
+      "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6164849/"
+    ],
+    "references": []
+  },
+  {
+    "id": "quercetin",
+    "name": "Quercetin",
+    "category": "Nutraceutical / Flavonoid",
+    "forms": [],
+    "typical_dosage": "500-1000 mg/day in studies",
+    "best_time": "With food",
+    "take_with": [],
+    "avoid_with": [],
+    "interactions": [
+      "Antioxidant flavonoid"
+    ],
+    "notes": [
+      "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5465816/"
+    ],
+    "references": []
+  },
+  {
+    "id": "alpha_lipoic_acid",
+    "name": "Alpha-Lipoic Acid (ALA)",
+    "category": "Nutraceutical",
+    "forms": [],
+    "typical_dosage": "300-600 mg/day",
+    "best_time": "With or without food",
+    "take_with": [],
+    "avoid_with": [
+      "May lower blood sugar — monitor with diabetes meds"
+    ],
+    "interactions": [
+      "Antioxidant; used in diabetic neuropathy"
+    ],
+    "notes": [
+      "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3295706/"
+    ],
+    "references": []
+  },
+  {
+    "id": "nac",
+    "name": "N-Acetylcysteine (NAC)",
+    "category": "Nutraceutical",
+    "forms": [],
+    "typical_dosage": "600-1800 mg/day",
+    "best_time": "With or without food",
+    "take_with": [],
+    "avoid_with": [
+      "Smoking/drug interactions caution"
+    ],
+    "interactions": [
+      "Precursor to glutathione; mucolytic"
+    ],
+    "notes": [
+      "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3603047/"
+    ],
+    "references": []
+  },
+  {
+    "id": "l_carnitine",
+    "name": "L-Carnitine",
+    "category": "Amino acid derivative",
+    "forms": [],
+    "typical_dosage": "500-2000 mg/day",
+    "best_time": "With meals",
+    "take_with": [],
+    "avoid_with": [],
+    "interactions": [
+      "Used for fatigue, metabolic support"
+    ],
+    "notes": [
+      "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5586376/"
+    ],
+    "references": []
+  },
+  {
+    "id": "taurine",
+    "name": "Taurine",
+    "category": "Amino acid",
+    "forms": [],
+    "typical_dosage": "500-2000 mg/day",
+    "best_time": "With meals",
+    "take_with": [],
+    "avoid_with": [],
+    "interactions": [
+      "Common in energy drinks; role in heart function"
+    ],
+    "notes": [
+      "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6984971/"
+    ],
+    "references": []
+  },
+  {
+    "id": "msm",
+    "name": "Methylsulfonylmethane (MSM)",
+    "category": "Nutraceutical",
+    "forms": [],
+    "typical_dosage": "1-3 g/day",
+    "best_time": "With food",
+    "take_with": [],
+    "avoid_with": [],
+    "interactions": [
+      "Used for joint health"
+    ],
+    "notes": [
+      "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5372953/"
+    ],
+    "references": []
+  },
+  {
+    "id": "hmb",
+    "name": "Beta-Hydroxy Beta-Methylbutyrate (HMB)",
+    "category": "Nutraceutical",
+    "forms": [],
+    "typical_dosage": "1.5-3 g/day",
+    "best_time": "With or after exercise",
+    "take_with": [],
+    "avoid_with": [],
+    "interactions": [
+      "Used for muscle preservation"
+    ],
+    "notes": [
+      "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6041975/"
+    ],
+    "references": []
+  },
+  {
+    "id": "beta_alanine",
+    "name": "Beta-Alanine",
+    "category": "Amino acid",
+    "forms": [],
+    "typical_dosage": "2-6 g/day",
+    "best_time": "Pre- or post-workout",
+    "take_with": [],
+    "avoid_with": [
+      "May cause paresthesia (tingling)"
+    ],
+    "interactions": [
+      "Used to improve high-intensity performance"
+    ],
+    "notes": [
+      "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6634549/"
+    ],
+    "references": []
+  },
+  {
+    "id": "st_johns_wort",
+    "name": "St. John's Wort (Hypericum perforatum)",
+    "category": "Herbal",
+    "forms": [],
+    "typical_dosage": "300 mg standardized extract TID",
+    "best_time": "With meals",
+    "take_with": [],
+    "avoid_with": [
+      "Interacts strongly with many drugs (CYP induction)"
+    ],
+    "interactions": [
+      "Avoid with many prescription meds; strong CYP interactions"
+    ],
+    "notes": [
+      "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2854389/"
+    ],
+    "references": []
+  },
+  {
+    "id": "black_cohosh",
+    "name": "Black Cohosh",
+    "category": "Herbal",
+    "forms": [],
+    "typical_dosage": "20-80 mg extract",
+    "best_time": "With food",
+    "take_with": [],
+    "avoid_with": [
+      "Liver caution"
+    ],
+    "interactions": [
+      "Used for menopausal symptoms; monitor liver"
+    ],
+    "notes": [
+      "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5481776/"
+    ],
+    "references": []
+  },
+  {
+    "id": "peppermint",
+    "name": "Peppermint oil",
+    "category": "Herbal",
+    "forms": [],
+    "typical_dosage": "0.2-0.4 mL enteric-coated capsules",
+    "best_time": "With meals",
+    "take_with": [],
+    "avoid_with": [],
+    "interactions": [
+      "Used for IBS symptoms"
+    ],
+    "notes": [
+      "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4114529/"
+    ],
+    "references": []
+  },
+  {
+    "id": "berberine",
+    "name": "Berberine",
+    "category": "Nutraceutical/Alkaloid",
+    "forms": [],
+    "typical_dosage": "500 mg TID common",
+    "best_time": "With meals",
+    "take_with": [],
+    "avoid_with": [
+      "May lower blood sugar; drug interactions"
+    ],
+    "interactions": [
+      "Used for glucose/lipid control; potent effects"
+    ],
+    "notes": [
+      "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4106646/"
+    ],
+    "references": []
+  },
+  {
+    "id": "garlic_extract",
+    "name": "Garlic extract (allicin)",
+    "category": "Herbal",
+    "forms": [],
+    "typical_dosage": "300-1000 mg/day",
+    "best_time": "With food",
+    "take_with": [],
+    "avoid_with": [
+      "Anticoagulant caution"
+    ],
+    "interactions": [
+      "May modestly reduce blood pressure and lipids"
+    ],
+    "notes": [
+      "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4103721/"
+    ],
+    "references": []
+  },
+  {
+    "id": "spirulina",
+    "name": "Spirulina",
+    "category": "Algae / Nutraceutical",
+    "forms": [],
+    "typical_dosage": "1-3 g/day",
+    "best_time": "With food",
+    "take_with": [],
+    "avoid_with": [],
+    "interactions": [
+      "Nutrient-dense algae; check for contamination in products"
+    ],
+    "notes": [
+      "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3136577/"
+    ],
+    "references": []
+  },
+  {
+    "id": "chlorella",
+    "name": "Chlorella",
+    "category": "Algae / Nutraceutical",
+    "forms": [],
+    "typical_dosage": "1-3 g/day",
+    "best_time": "With food",
+    "take_with": [],
+    "avoid_with": [],
+    "interactions": [
+      "Source of nutrients; detox claims mixed"
+    ],
+    "notes": [
+      "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5796020/"
+    ],
+    "references": []
+  },
+  {
+    "id": "beta_glucan",
+    "name": "Beta-Glucan",
+    "category": "Fiber / Immunomodulator",
+    "forms": [],
+    "typical_dosage": "250-500 mg/day",
+    "best_time": "With food",
+    "take_with": [],
+    "avoid_with": [],
+    "interactions": [
+      "May support immune function"
+    ],
+    "notes": [
+      "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3437806/"
+    ],
+    "references": []
+  },
+  {
+    "id": "fluoride",
+    "name": "Fluoride",
+    "category": "Mineral",
+    "forms": [],
+    "typical_dosage": "Varies; often topical/fluoridated water",
+    "best_time": "Topical for dental use",
+    "take_with": [],
+    "avoid_with": [],
+    "interactions": [],
+    "notes": "Used mainly for dental health; supplements rarely recommended.",
+    "references": [
+      "https://www.ncbi.nlm.nih.gov/books/NBK499877/"
+    ]
+  },
+  {
+    "id": "sodium",
+    "name": "Sodium",
+    "category": "Electrolyte",
+    "forms": [],
+    "typical_dosage": "Varies; dietary intake common",
+    "best_time": "With meals",
+    "take_with": [],
+    "avoid_with": [],
+    "interactions": [
+      "Excess linked to hypertension"
+    ],
+    "notes": "Usually obtained from diet.",
+    "references": [
+      "https://www.ncbi.nlm.nih.gov/books/NBK507863/"
+    ]
+  },
+  {
+    "id": "chloride",
+    "name": "Chloride",
+    "category": "Electrolyte",
+    "forms": [],
+    "typical_dosage": "Dietary chloride from salt",
+    "best_time": "With meals",
+    "take_with": [],
+    "avoid_with": [],
+    "interactions": [],
+    "notes": "Often follows sodium intake.",
+    "references": [
+      "https://www.ncbi.nlm.nih.gov/books/NBK507863/"
+    ]
+  },
+  {
+    "id": "sulfur",
+    "name": "Sulfur",
+    "category": "Mineral/Element",
+    "forms": [],
+    "typical_dosage": "Obtained from diet (protein)",
+    "best_time": "With meals",
+    "take_with": [],
+    "avoid_with": [],
+    "interactions": [],
+    "notes": "Component of some amino acids (cysteine, methionine).",
+    "references": [
+      "https://www.ncbi.nlm.nih.gov/books/NBK507863/"
+    ]
+  }
+]
+</script>
+
+
+
+<script>
+/* ===== REPAIR PATCH: robust search index + stable details drawer =====
+   Replaced app script with this block.
+*/
+(function(){
+  try {
+    const KB = JSON.parse(document.getElementById('kb').textContent || '[]');
+    const grid = document.getElementById('grid');
+    const searchInput = document.getElementById('searchInput');
+    const categorySelect = document.getElementById('category');
+    const counts = document.getElementById('counts');
+    const exportBtn = document.getElementById('export');
+    const drawerWrapper = document.getElementById('drawerWrapper');
+    const drawerBackdrop = document.getElementById('drawerBackdrop');
+    const drawerContent = document.getElementById('drawerContent');
+
+    // Build a normalized search index per item — avoids field type issues (arrays, objects, etc.)
+    const INDEX = {}; // { id: "combined lowercase text" }
+    KB.forEach(item => {
+      const parts = [];
+      if (item.name) parts.push(String(item.name));
+      if (item.id) parts.push(String(item.id));
+      // include many fields that users might search
+      ['notes','uses','take_with','avoid_with','interactions','forms','typical_dosage','best_time','category'].forEach(f=>{
+        if (item[f]) {
+          if (Array.isArray(item[f])) parts.push(item[f].join(' '));
+          else parts.push(String(item[f]));
+        }
+      });
+      INDEX[item.id] = parts.join(' ').toLowerCase();
+    });
+
+    // populate categories dropdown (keeps your existing categories)
+    const categories = Array.from(new Set(KB.map(i => i.category || 'Other'))).sort();
+    categories.forEach(c => {
+      const opt = document.createElement('option');
+      opt.value = c; opt.textContent = c;
+      categorySelect.appendChild(opt);
+    });
+
+    let query = '', catSel = 'All';
+
+    function matches(item) {
+      if (!query) return true;
+      const text = INDEX[item.id] || '';
+      return text.indexOf(query) !== -1;
+    }
+
+    function getBadgeHtml(url){
+      if(!url) return '';
+      if(url.includes('ods.od.nih.gov')) return '<span class="badge badge-nih">NIH ODS</span>';
+      if(url.includes('ncbi.nlm.nih.gov')) return '<span class="badge badge-ncbi">NCBI</span>';
+      return '<span class="badge">Source</span>';
+    }
+
+    function render(){
+      // render cards from KB -> grid
+      grid.innerHTML = '';
+      const filtered = KB.filter(it => (catSel === 'All' || (it.category || 'Other') === catSel) && matches(it))
+                         .sort((a,b)=> (String(a.name||'')).localeCompare(String(b.name||'')));
+      counts.innerHTML = 'Showing <strong>' + filtered.length + '</strong> of ' + KB.length;
+      const frag = document.createDocumentFragment();
+
+      filtered.forEach(it => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.dataset.id = it.id;
+
+        const notesPreview = (typeof it.notes === 'string') ? it.notes : (Array.isArray(it.notes) && it.notes.length ? it.notes[0] : '');
+        const uses = (it.uses||[]).slice(0,3).join(', ');
+        const take = (it.take_with||[]).slice(0,3).join('; ');
+
+        card.innerHTML = ''
+          + '<div class="meta"><div class="muted">' + (it.category || 'Other') + '</div><div class="muted">ID: ' + it.id + '</div></div>'
+          + '<div class="name">' + (it.name || '') + '</div>'
+          + '<div class="notes">' + (notesPreview || '') + '</div>'
+          + '<div class="chips"><div class="chip uses">Uses: ' + (uses || '—') + '</div><div class="chip take">Take: ' + (take || '—') + '</div></div>'
+          + '<div class="card-footer"><button class="btn btn-primary detailBtn" data-id="' + it.id + '">Details</button><button class="btn btn-copy copyBtn" data-id="' + it.id + '">Copy</button></div>';
+
+        frag.appendChild(card);
+      });
+
+      grid.appendChild(frag);
+    }
+
+    // stable event delegation for buttons inside grid
+    grid.addEventListener('click', (e) => {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+      const id = btn.dataset.id;
+      if (!id) return;
+      if (btn.classList.contains('detailBtn')) openDrawer(id);
+      if (btn.classList.contains('copyBtn')) {
+        const it = KB.find(x => x.id === id);
+        if (it && navigator.clipboard) {
+          try { navigator.clipboard.writeText(JSON.stringify(it, null, 2)); } catch(e) { /* ignore */ }
+        }
+        alert('Copied JSON to clipboard for ' + id);
+      }
+    });
+
+    // open drawer: reliably pick a clickable reference (first references[0] OR first http-like note)
+    function openDrawer(id) {
+      const it = KB.find(x => x.id === id);
+      if (!it) return;
+      let ref = '';
+      if (it.references && it.references.length) ref = it.references[0];
+      else if (it.notes) {
+        if (typeof it.notes === 'string' && it.notes.startsWith('http')) ref = it.notes;
+        else if (Array.isArray(it.notes)) {
+          const maybe = it.notes.find(n => typeof n === 'string' && n.startsWith('http'));
+          if (maybe) ref = maybe;
+        }
+      }
+      const badge = getBadgeHtml(ref);
+      const refHtml = ref ? ('<a class="ref-link" href="' + ref + '" target="_blank" rel="noreferrer">' + ref + '</a> ' + badge) : '—';
+
+      drawerContent.innerHTML = ''
+        + '<h2 style="font-size:18px;margin:0 0 8px;font-weight:800">' + (it.name || '') + '</h2>'
+        + '<div class="muted" style="margin-bottom:8px">' + (it.category || 'Other') + ' • ID: ' + it.id + '</div>'
+        + '<div style="margin-bottom:8px"><strong>Forms:</strong> ' + ((it.forms && it.forms.length)? it.forms.join(', ') : '—') + '</div>'
+        + '<div style="margin-bottom:8px"><strong>Typical dosage:</strong> ' + (it.typical_dosage || '—') + '</div>'
+        + '<div style="margin-bottom:8px"><strong>Best time:</strong> ' + (it.best_time || '—') + '</div>'
+        + '<div style="margin-bottom:8px"><strong>Uses:</strong><ul>' + ((it.uses||[]).map(u=>'<li>'+u+'</li>').join('')) + '</ul></div>'
+        + '<div style="margin-bottom:8px"><strong>Take with:</strong>' + ((it.take_with && it.take_with.length)? '<ul>' + it.take_with.map(u=>'<li>'+u+'</li>').join('') + '</ul>' : ' —') + '</div>'
+        + '<div style="margin-bottom:8px"><strong>Avoid:</strong>' + ((it.avoid_with && it.avoid_with.length)? '<ul>' + it.avoid_with.map(u=>'<li>'+u+'</li>').join('') + '</ul>' : ' —') + '</div>'
+        + '<div style="margin-bottom:8px"><strong>Interactions / Cautions:</strong>' + ((it.interactions && it.interactions.length)? '<ul>' + it.interactions.map(u=>'<li>'+u+'</li>').join('') + '</ul>' : ' —') + '</div>'
+        + '<div style="margin-bottom:8px"><strong>Notes:</strong><div class="muted" style="margin-top:6px">' + (typeof it.notes==='string'?it.notes:(Array.isArray(it.notes)?it.notes.join('<br>'):'—')) + '</div></div>'
+        + '<div style="margin-bottom:8px"><strong>Reference:</strong><div style="margin-top:6px">' + refHtml + '</div></div>'
+        + '<div style="display:flex;gap:8px;margin-top:12px"><button id="exportItem" class="btn btn-primary">Export item</button><button id="closeBtn" class="btn">Close</button></div>';
+
+      document.body.classList.add('drawer-open');
+      drawerWrapper.style.display = 'block';
+
+      // wire the close/export local buttons freshly each open
+      const closeBtn = document.getElementById('closeBtn');
+      if (closeBtn) {
+        closeBtn.onclick = () => { document.body.classList.remove('drawer-open'); drawerWrapper.style.display='none'; };
+      }
+      const exportItem = document.getElementById('exportItem');
+      if (exportItem) {
+        exportItem.onclick = () => {
+          const dataStr = 'data:application/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(it, null, 2));
+          const dl = document.createElement('a'); dl.setAttribute('href', dataStr); dl.setAttribute('download', it.id + '.json'); document.body.appendChild(dl); dl.click(); dl.remove();
+        };
+      }
+    }
+
+    // close handlers (drawer backdrop + top Close)
+    function closeDrawerHandler(){ document.body.classList.remove('drawer-open'); drawerWrapper.style.display='none'; }
+    drawerBackdrop.addEventListener('click', closeDrawerHandler);
+    const topClose = document.getElementById('closeDrawer');
+    if (topClose) topClose.addEventListener('click', closeDrawerHandler);
+
+    // search input (debounced) — stores lowercase query
+    let debounceTimer = null;
+    searchInput.addEventListener('input', (e)=> {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(()=> {
+        query = (e.target.value || '').trim().toLowerCase();
+        render();
+      }, 100);
+    });
+
+    // category filter
+    categorySelect.addEventListener('change', (e)=>{ catSel = e.target.value; render(); });
+
+    // export all
+    if (exportBtn) {
+      exportBtn.addEventListener('click', ()=> {
+        const dataStr = 'data:application/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(KB, null, 2));
+        const dl = document.createElement('a'); dl.setAttribute('href', dataStr); dl.setAttribute('download', 'supplements_kb_full.json'); document.body.appendChild(dl); dl.click(); dl.remove();
+      });
+    }
+
+    // initial render
+    render();
+
+    // helpful quick console message
+    console.log('Repaired supplements app: search and details wired (items:', KB.length, ')');
+  } catch (err) {
+    console.error('App repair script error:', err);
+    alert('Error initializing app repair script — see console for details.');
+  }
+})();
+</script>
+
+
+</body>
+</html>
